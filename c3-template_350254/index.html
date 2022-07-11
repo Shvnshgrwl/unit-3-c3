@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      #navbar{
+        border: 1px;
+        width: 100%;
+        background-color: black;
+        color: white;
+        display: flex;
+      }
+      #navbar > div{
+        display: flex;
+        color:white;
+      }
+
+    </style>
+  </head>
+  <body>
+    <div id="navbar">
+      <h2>Hotel App</h2>
+      <div onclick="window.location.href='login.html'" id="login" style="margin: auto ;color: white;">Log in</div>
+      <div onclick="window.location.href='signup.html'" id="signup"  style="margin: auto;color: white;">Sign Up</div>
+      <div id="query">
+        <input type="text" id="seacrh" placeholder="search for hotel">
+      </div>
+      <!-- the search-box id:- "query"
+ - the log-in and sign-up link will have ids:- "login" and "signup" -->
+    </div>
+    <div id="sorting">
+      <!-- sort by price low to high Id:- "sort_lth"
+ - sort by price high to low Id:- "sort_htl"
+ - Filter Ac hotels Id:- "filter_ac"
+ - Filter Non Ac hotels Id:- "filter_nonac" -->
+    </div>
+    <div id="hotels_list">
+      <!-- - Append all fetched hotels inside div with id:- "hotels_list"
+ - Every hotel card will have id:-  "hotel"
+ - The book now button will have class as "book" -->
+    </div>
+  </body>
+</html>
+<script src="./scripts/index.js" type="module">
+
+</script>
+
+<script>
+ let searchHotel= async () =>{
+    try{
+        
+        let res = await fetch(`https://masai-mock-api.herokuapp.com/hotels/search?city=goa`,{
+          headers:{
+            "Content-Type":"application/json"
+          }
+        })
+        let data = await res.json()
+
+        append(data.hotels,document.querySelector("#hotels_list"))
+   
+    }
+    catch(err){
+        console.log(err)
+    }
+}
+searchHotel ()
+let append = (data,container) =>{
+  container.innerHTML=null
+
+  data.forEach(({Title,Images,Ac,Rating,Price})=>{
+    let newData = []
+
+    let div = document.createElement("div")
+    div.setAttribute("Title","hotels")
+   
+
+        let Images = document.createElement("img")
+        Images.src = Images
+
+        let Rooms = document.createElement("room")
+        Rooms.innerHTML= Rooms
+
+        // let Ac = document.createElement("ac")
+        // Ac.innerHTML = Ac
+
+        let Rating = document.createElement("rating")
+        Rating.innerHTML = Rating
+
+        newData.push(Title,Images,Ac,Rating,Price)
+
+        div.addEventListener("click",function(){
+            
+            localStorage.setItem("newData",JSON.stringify(newData))
+            window.location.href = "checkout.html"
+        })
+        div.append(Images,Rooms,Ac,PRice)
+  })
+}
+</script>
